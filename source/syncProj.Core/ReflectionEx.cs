@@ -37,7 +37,7 @@ public static class ReflectionEx
         {
             return (member as PropertyInfo).GetValue(target, null);
         }
-        else 
+        else
         //if (member is FieldInfo)
         {
             return (member as FieldInfo).GetValue(target);
@@ -109,11 +109,11 @@ public static class ReflectionEx
                 // Don't clone
                 if (
                     // Solution / parent reference
-                    field.Name == "parent" || 
+                    field.Name == "parent" ||
                     // projects list, no need to clone, as it's copy of solution projects
-                    field.Name == "nodes" || 
+                    field.Name == "nodes" ||
                     // backreference to solution.
-                    field.Name == "solution" )
+                    field.Name == "solution")
                 {
                     continue;
                 }
@@ -125,7 +125,7 @@ public static class ReflectionEx
 
                 // Properties with only get or only set, not copyable.
                 PropertyInfo pi = field as PropertyInfo;
-                if( pi != null && (!pi.CanRead || !pi.CanWrite) )
+                if (pi != null && (!pi.CanRead || !pi.CanWrite))
                     continue;
 
                 object fieldValue = field.GetValue(obj);

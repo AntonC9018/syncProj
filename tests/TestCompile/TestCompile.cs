@@ -7,7 +7,7 @@ using System.IO;
 
 partial class Builder : SolutionProjectBuilder
 {
-    static public void inv( int i, bool bExpectedToBeCompled )
+    public static void inv( int i, bool bExpectedToBeCompled )
     {
         Console.Write( i.ToString() + ") invokeScript: ");
         if (bExpectedToBeCompled)

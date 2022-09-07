@@ -29,7 +29,7 @@ public class UnitSuiteInfo
     /// </summary>
     /// <returns></returns>
     virtual public IEnumerable<UnitTestInfo> GetUnitTests()
-    { 
+    {
         return Enumerable.Empty<UnitTestInfo>();
     }
 }
@@ -65,20 +65,13 @@ public class UnitTestInfo
     /// <param name="isLastMethod">true if given method is last invoked, and api must clean up / release test class resources</param>
     /// <exception cref="OperationCanceledException">Can be thrown to cancel ongoing tests</exception>
     virtual public void InvokeTest(bool isLastMethod, TestResults localTestResults)
-    { 
+    {
     }
 }
 
 [ExcludeFromCodeCoverage]
 public class GoogleTestBootstrap
 {
-    //
-    // https://stackoverflow.com/questions/3469368/how-to-handle-accessviolationexception
-    //
-    // We want to catch all exceptions here, even process corrupted exceptions.
-    //
-    [HandleProcessCorruptedStateExceptions]
-
     /// <summary>
     /// Starts google test console main function, which in a turn either lists available tests or executes tests
     /// </summary>
@@ -92,7 +85,7 @@ public class GoogleTestBootstrap
         String exeName = Path.GetFileName(asm.Location);
         bool bListTests = false;
         Dictionary<String, List<String>> filterClassMethodsToRun = null;
-        XDocument testsuites = new XDocument( new XDeclaration("1.0", "utf-8", ""), new XElement("testsuites"));
+        XDocument testsuites = new XDocument(new XDeclaration("1.0", "utf-8", ""), new XElement("testsuites"));
         String slash = "[-/]+";     // "-tests", "--tests" or "/tests"
 
         // Google unit testing uses --gtest_output=xml:<file>, can be shorten to "-out:<file>"
@@ -199,7 +192,7 @@ public class GoogleTestBootstrap
                 filterMethods = filterClassMethodsToRun[suiteName];
             }
 
-            if(printGoogleUnitTestFormat)
+            if (printGoogleUnitTestFormat)
                 Console.WriteLine(suiteName);
 
             List<UnitTestInfo> unitTests = testSuite.GetUnitTests().ToList();
@@ -364,7 +357,7 @@ public class GoogleTestBootstrap
 
             // class scan complete, fetch results if necessary
             if (testsuite != null)
-            { 
+            {
                 FetchTestResults(testsuite, localTestResults);
                 totalTestResults.Add(localTestResults);
             }
@@ -396,15 +389,15 @@ public class GoogleTestBootstrap
         if (runTests)
         {
             if (!printGoogleUnitTestFormat)
-            { 
+            {
                 Console.WriteLine(" ok.");
 
                 String summaryLine = (totalTestResults.tests - totalTestResults.failures) + " tests passed";
 
-                if( totalTestResults.files != 0 )
+                if (totalTestResults.files != 0)
                     summaryLine += " (" + totalTestResults.files + " files verified)";
 
-                if (totalTestResults.failures != 0 )
+                if (totalTestResults.failures != 0)
                     summaryLine += ", " + totalTestResults.failures + " FAILED";
 
                 if (totalTestResults.disabled != 0)

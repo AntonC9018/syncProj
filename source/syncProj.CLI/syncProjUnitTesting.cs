@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -37,7 +36,6 @@ public class syncProjUnitSuiteInfo : UnitSuiteInfo
             allTests.AddRange(tests.Select(x => x.Substring(testsDir.Length + 1)));
         }
 
-        String testsuite = "";
         List<syncProjUnitSuiteInfo> suites = new List<syncProjUnitSuiteInfo>();
 
         foreach (String test in allTests)
@@ -145,7 +143,7 @@ public class syncProjUnitTestInfo : UnitTestInfo
             SolutionProjectBuilder.resetStatics();
             var co = Console.Out;
             Console.SetOut(cw);
-            error = syncProj.Main(new String[] { "-x", "-p", "out_", test });
+            error = syncProjCLI.Main(new String[] { "-x", "-p", "out_", test });
 
             bool bIsScript = Path.GetExtension(test).ToLower() == ".cs";
             if (bIsScript)  // By default it's executed by default destructor, here we need to launch it manually.
